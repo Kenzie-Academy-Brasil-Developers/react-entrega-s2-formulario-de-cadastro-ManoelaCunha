@@ -5,7 +5,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
+import { useHistory } from "react-router";
+
 const Form = () => {
+  const history = useHistory();
+
   const formSchema = yup.object().shape({
     name: yup
       .string()
@@ -29,18 +33,15 @@ const Form = () => {
   });
 
   const {
-    reset,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(formSchema) });
 
   const handleForm = (data) => {
-    const inputForm = formSchema.isValid(data).then((valid) => {
-      valid && console.log(data);
-      //history.push("/card");
+    formSchema.isValid(data).then((valid) => {
+      valid && history.push(`/home/${data.name}`);
     });
-    reset(inputForm);
   };
 
   return (
