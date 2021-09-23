@@ -11,5 +11,6 @@ export const useStyles = makeStyles(() => ({
   icone: {
     fontSize: "20px",
     cursor: "pointer",
+    color: "gray",
   },
 }));
