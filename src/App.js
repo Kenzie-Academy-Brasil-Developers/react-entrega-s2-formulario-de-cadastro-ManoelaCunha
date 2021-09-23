@@ -1,14 +1,12 @@
 import "./App.css";
 import Routes from "./routes";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <div className="App-content">
-        <Routes />
-      </div>
+      <Routes />
     </div>
   );
-}
+};
 
 export default App;

@@ -2,13 +2,21 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { useStyles } from "./styles";
 import { Button, TextField } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { Visibility, VisibilityOff, Person, Email } from "@material-ui/icons";
 
 import { useHistory } from "react-router";
+import { useState } from "react";
 
 const Form = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const history = useHistory();
+  const classes = useStyles();
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const formSchema = yup.object().shape({
     name: yup
@@ -46,17 +54,20 @@ const Form = () => {
 
   return (
     <form onSubmit={handleSubmit(handleForm)}>
-      <div>
+      <div className={classes.root}>
         <TextField
           type="text"
           size="small"
           label="Nome"
-          color="primary"
           margin="normal"
-          variant="outlined"
+          variant="filled"
           {...register("name")}
           error={!!errors.name}
           helperText={errors.name?.message}
+          className={classes.textfield}
+          InputProps={{
+            endAdornment: <Person className={classes.icone} />,
+          }}
         />
       </div>
       <div>
@@ -64,42 +75,77 @@ const Form = () => {
           type="email"
           size="small"
           label="Email"
-          color="primary"
           margin="normal"
-          variant="outlined"
+          variant="filled"
           {...register("email")}
           error={!!errors.email}
           helperText={errors.email?.message}
+          className={classes.textfield}
+          InputProps={{
+            endAdornment: <Email className={classes.icone} />,
+          }}
         />
       </div>
       <div>
         <TextField
-          type="password"
+          type={!showPassword ? "password" : "text"}
           size="small"
           label="Senha"
-          color="primary"
           margin="normal"
-          variant="outlined"
+          variant="filled"
           {...register("password")}
           error={!!errors.password}
           helperText={errors.password?.message}
+          className={classes.textfield}
+          InputProps={{
+            endAdornment: showPassword ? (
+              <VisibilityOff
+                className={classes.icone}
+                onClick={handleShowPassword}
+              />
+            ) : (
+              <Visibility
+                className={classes.icone}
+                onClick={handleShowPassword}
+              />
+            ),
+          }}
         />
       </div>
       <div>
         <TextField
-          type="password"
+          type={!showPassword ? "password" : "text"}
           size="small"
           label="Confirmar Senha"
-          color="primary"
           margin="normal"
-          variant="outlined"
+          variant="filled"
           {...register("confirmPassword")}
           error={!!errors.confirmPassword}
           helperText={errors.confirmPassword?.message}
+          className={classes.textfield}
+          InputProps={{
+            endAdornment: showPassword ? (
+              <VisibilityOff
+                className={classes.icone}
+                onClick={handleShowPassword}
+              />
+            ) : (
+              <Visibility
+                className={classes.icone}
+                onClick={handleShowPassword}
+              />
+            ),
+          }}
         />
       </div>
       <div>
-        <Button type="submit" size="large" variant="outlined">
+        <Button
+          type="submit"
+          size="large"
+          color="primary"
+          variant="outlined"
+          className={classes.button}
+        >
           Cadastrar
         </Button>
       </div>
